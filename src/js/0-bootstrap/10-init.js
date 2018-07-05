@@ -48,7 +48,6 @@ bootstrap.init = function () {
             {
                 path: '/about',
                 url : './pages/about.html'
-
             }, {
                 path: '/home',
                 url : './pages/home.html'
