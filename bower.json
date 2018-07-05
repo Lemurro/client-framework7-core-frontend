@@ -1,0 +1,9 @@
+{
+  "name": "lemurro-client-framework7-core-frontend",
+  "description": "Javascript-ядро для Lemurro Mobile Client",
+  "homepage": "https://github.com/Lemurro/client-framework7-core-frontend",
+  "authors": [
+    "DimNS <atomcms@ya.ru>"
+  ],
+  "license": "MIT"
+}
