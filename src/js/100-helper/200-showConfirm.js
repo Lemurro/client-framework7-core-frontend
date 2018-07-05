@@ -13,7 +13,7 @@
  * @version 05.07.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helpers.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
     swal({
         title             : title,
         html              : content,

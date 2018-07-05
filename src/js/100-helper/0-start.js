@@ -10,4 +10,4 @@
  *
  * @type {object}
  */
-var helpers = {};
+var helper = {};

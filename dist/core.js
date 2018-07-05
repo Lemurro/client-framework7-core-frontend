@@ -544,7 +544,7 @@ auth.getCode = function () {
  *
  * @type {object}
  */
-var helpers = {};
+var helper = {};
 /**
  * Покажем подтверждение
  *
@@ -560,7 +560,7 @@ var helpers = {};
  * @version 05.07.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helpers.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
     swal({
         title             : title,
         html              : content,
@@ -590,7 +590,7 @@ helpers.showConfirm = function (title, content, confirmButtonText, cancelButtonT
  * @version 05.07.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helpers.showPopup = function (title, content) {
+helper.showPopup = function (title, content) {
     var popup = $$('#js-popup');
 
     popup.find('.popup__title').html(title);
