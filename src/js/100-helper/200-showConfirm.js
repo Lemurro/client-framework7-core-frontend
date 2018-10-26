@@ -10,10 +10,10 @@
  * @param {function} callbackConfirm    Функция при нажатии confirmButton
  * @param {function} callbackCancel     Функция при нажатии cancelButton
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
     swal({
         title             : title,
         html              : content,

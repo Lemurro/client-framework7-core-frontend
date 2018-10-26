@@ -1,10 +1,10 @@
 /**
  * Инициализация
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap.init = function () {
+lemurro.init = function () {
     if (window.overrideSettings === undefined) {
         window.overrideSettings = {};
     }
@@ -13,7 +13,7 @@ bootstrap.init = function () {
         window.overrideF7Settings = {};
     }
 
-    bootstrap.settings = Object.assign({
+    lemurro.settings = Object.assign({
         versionAPI   : 1,
         authType     : 'email',
         pageAfterAuth: '/home',
@@ -26,7 +26,7 @@ bootstrap.init = function () {
         }
     }, window.overrideSettings);
 
-    bootstrap.f7settings = Object.assign({
+    lemurro.f7settings = Object.assign({
         id     : 'ru.bestion.lemurro',
         name   : 'Lemurro',
         version: '0.1.0',
@@ -41,7 +41,7 @@ bootstrap.init = function () {
         on     : {
             pageInit: function (event) {
                 app.panel.close();
-                bootstrap._initPage(event.name);
+                lemurro._initPage(event.name);
             }
         },
         routes : [
@@ -55,15 +55,15 @@ bootstrap.init = function () {
         ]
     }, window.overrideF7Settings);
 
-    bootstrap._bindJSerrors();
+    lemurro._bindJSerrors();
 
-    app      = new Framework7(bootstrap.f7settings);
+    app      = new Framework7(lemurro.f7settings);
     $$       = Dom7;
     mainView = app.views.create('.view-main');
 
-    $$('#js-api-version').text(bootstrap.settings.versionAPI);
+    $$('#js-api-version').text(lemurro.settings.versionAPI);
 
-    bootstrap._showLoginScreen();
+    lemurro._showLoginScreen();
 
     app.request.setup({
         cache      : false,
@@ -72,7 +72,7 @@ bootstrap.init = function () {
         beforeSend : function (xhr) {
             if (xhr.requestUrl.substr(0, pathServerAPI.length) === pathServerAPI) {
                 xhr.requestParameters.dataType = 'json';
-                xhr.setRequestHeader('X-SESSION-ID', bootstrap.sessionID);
+                xhr.setRequestHeader('X-SESSION-ID', lemurro.sessionID);
             }
         },
         error      : function (xhr, status) {
@@ -102,5 +102,5 @@ bootstrap.init = function () {
         }
     });
 
-    bootstrap._run();
+    lemurro._run();
 };

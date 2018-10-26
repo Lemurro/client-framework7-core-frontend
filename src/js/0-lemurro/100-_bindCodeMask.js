@@ -1,10 +1,10 @@
 /**
  * Создадим маску для кода авторизации
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindCodeMask = function () {
+lemurro._bindCodeMask = function () {
     $$('.js-code-mask').each(function () {
         var element = $$(this);
 

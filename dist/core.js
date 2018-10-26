@@ -1,8 +1,8 @@
 /**
  * Загрузочный скрипт приложения
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 var app;
@@ -11,11 +11,11 @@ var mainView;
 
 window.onload = function () {
     if (modeCordova) {
-        document.addEventListener('deviceready', bootstrap.init);
-        document.addEventListener('offline', internet.offline);
-        document.addEventListener('online', internet.online);
+        document.addEventListener('deviceready', lemurro.init);
+        document.addEventListener('offline', lemurro.internet.offline);
+        document.addEventListener('online', lemurro.internet.online);
     } else {
-        bootstrap.init();
+        lemurro.init();
     }
 };
 
@@ -24,35 +24,35 @@ window.onload = function () {
  *
  * @type {object}
  */
-var bootstrap = {};
+var lemurro = {};
 
 /**
  * ИД сессии
  *
  * @type {string}
  */
-bootstrap.sessionID = '';
+lemurro.sessionID = '';
 
 /**
  * Настройки приложения
  *
  * @type {object}
  */
-bootstrap.settings = {};
+lemurro.settings = {};
 
 /**
  * Настройки framework7
  *
  * @type {object}
  */
-bootstrap.f7settings = {};
+lemurro.f7settings = {};
 /**
  * Инициализация
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap.init = function () {
+lemurro.init = function () {
     if (window.overrideSettings === undefined) {
         window.overrideSettings = {};
     }
@@ -61,7 +61,7 @@ bootstrap.init = function () {
         window.overrideF7Settings = {};
     }
 
-    bootstrap.settings = Object.assign({
+    lemurro.settings = Object.assign({
         versionAPI   : 1,
         authType     : 'email',
         pageAfterAuth: '/home',
@@ -74,7 +74,7 @@ bootstrap.init = function () {
         }
     }, window.overrideSettings);
 
-    bootstrap.f7settings = Object.assign({
+    lemurro.f7settings = Object.assign({
         id     : 'ru.bestion.lemurro',
         name   : 'Lemurro',
         version: '0.1.0',
@@ -89,14 +89,13 @@ bootstrap.init = function () {
         on     : {
             pageInit: function (event) {
                 app.panel.close();
-                bootstrap._initPage(event.name);
+                lemurro._initPage(event.name);
             }
         },
         routes : [
             {
                 path: '/about',
                 url : './pages/about.html'
-
             }, {
                 path: '/home',
                 url : './pages/home.html'
@@ -104,15 +103,15 @@ bootstrap.init = function () {
         ]
     }, window.overrideF7Settings);
 
-    bootstrap._bindJSerrors();
+    lemurro._bindJSerrors();
 
-    app      = new Framework7(bootstrap.f7settings);
+    app      = new Framework7(lemurro.f7settings);
     $$       = Dom7;
     mainView = app.views.create('.view-main');
 
-    $$('#js-api-version').text(bootstrap.settings.versionAPI);
+    $$('#js-api-version').text(lemurro.settings.versionAPI);
 
-    bootstrap._showLoginScreen();
+    lemurro._showLoginScreen();
 
     app.request.setup({
         cache      : false,
@@ -121,7 +120,7 @@ bootstrap.init = function () {
         beforeSend : function (xhr) {
             if (xhr.requestUrl.substr(0, pathServerAPI.length) === pathServerAPI) {
                 xhr.requestParameters.dataType = 'json';
-                xhr.setRequestHeader('X-SESSION-ID', bootstrap.sessionID);
+                xhr.setRequestHeader('X-SESSION-ID', lemurro.sessionID);
             }
         },
         error      : function (xhr, status) {
@@ -151,15 +150,15 @@ bootstrap.init = function () {
         }
     });
 
-    bootstrap._run();
+    lemurro._run();
 };
 /**
  * Создадим маску для кода авторизации
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindCodeMask = function () {
+lemurro._bindCodeMask = function () {
     $$('.js-code-mask').each(function () {
         var element = $$(this);
 
@@ -171,10 +170,10 @@ bootstrap._bindCodeMask = function () {
 /**
  * Внешние ссылки откроем в браузере
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindExternalLink = function () {
+lemurro._bindExternalLink = function () {
     $$(document).on('click', 'a[target="_blank"]', function (e) {
         window.open($$(this).attr('href'), '_system');
         e.preventDefault();
@@ -185,10 +184,10 @@ bootstrap._bindExternalLink = function () {
 /**
  * Событие отправки javascript-ошибки при возникновении
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindJSerrors = function () {
+lemurro._bindJSerrors = function () {
     /**
      * Отправка javascript-ошибки
      *
@@ -229,10 +228,10 @@ bootstrap._bindJSerrors = function () {
 /**
  * Создадим маску для телефона
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindPhoneMask = function () {
+lemurro._bindPhoneMask = function () {
     $$('.js-phone-mask').each(function () {
         var element = $$(this);
 
@@ -244,10 +243,10 @@ bootstrap._bindPhoneMask = function () {
 /**
  * Покажем popover
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._bindShowPopover = function () {
+lemurro._bindShowPopover = function () {
     $$('body').on('click', '.js-show-popover', function () {
         app.dialog.alert($$(this).attr('data-popover'), '');
     });
@@ -257,18 +256,18 @@ bootstrap._bindShowPopover = function () {
  *
  * @param {string} pageName Имя страницы
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._initPage = function (pageName) {
+lemurro._initPage = function (pageName) {
     app.preloader.show();
     app.request.get(pathServerAPI + 'user', {}, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
-            bootstrap.showErrors(result.errors);
+            lemurro.showErrors(result.errors);
         } else {
-            bootstrap.settings.onLoad(result.data);
+            lemurro.settings.onLoad(result.data);
 
             var pageScript = window[pageName];
 
@@ -283,18 +282,18 @@ bootstrap._initPage = function (pageName) {
 /**
  * Запуск приложения
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._run = function () {
+lemurro._run = function () {
     app.preloader.show();
     app.request.get(pathServerAPI, {}, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
-            bootstrap.showErrors(result.errors);
+            lemurro.showErrors(result.errors);
         } else {
-            if (modeCordova && parseInt(result.data.version[device.platform.toLowerCase()], 10) > bootstrap.settings.versionAPI) {
+            if (modeCordova && parseInt(result.data.version[device.platform.toLowerCase()], 10) > lemurro.settings.versionAPI) {
                 var popup = $$('#js-popup');
 
                 popup.find('.popup__title').html('&nbsp;');
@@ -303,23 +302,23 @@ bootstrap._run = function () {
                     '<h1><i class="fas fa-thumbs-up font-100"></i></h1>' +
                     '<h1>Ура, вышла новая версия приложения!</h1>' +
                     '<h3>Чтобы продолжить, обновите приложение из магазина.</h3>' +
-                    '<p><a href="javascript:bootstrap.update();" class="button button-raised button-fill">Обновить</a></p>' +
+                    '<p><a href="javascript:lemurro.update();" class="button button-raised button-fill">Обновить</a></p>' +
                     '</div>'
                 );
                 popup.find('.close-popup').hide();
 
                 app.popup.open(popup);
             } else {
-                bootstrap._bindShowPopover();
-                bootstrap._bindPhoneMask();
-                bootstrap._bindCodeMask();
-                bootstrap._bindExternalLink();
+                lemurro._bindShowPopover();
+                lemurro._bindPhoneMask();
+                lemurro._bindCodeMask();
+                lemurro._bindExternalLink();
 
                 localforage.getItem('sessionID', function (err, value) {
-                    bootstrap.sessionID = value;
+                    lemurro.sessionID = value;
 
-                    if (bootstrap.sessionID !== null) {
-                        auth.check();
+                    if (lemurro.sessionID !== null) {
+                        lemurro.auth.check();
                     }
                 });
             }
@@ -329,12 +328,12 @@ bootstrap._run = function () {
 /**
  * Покажем форму входа
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._showLoginScreen = function () {
+lemurro._showLoginScreen = function () {
     $$('#js-login-screen .js-auth-form').hide();
-    $$('#js-auth-' + bootstrap.settings.authType + '-get-form').show();
+    $$('#js-auth-' + lemurro.settings.authType + '-get-form').show();
     app.loginScreen.open('#js-login-screen');
 };
 /**
@@ -342,12 +341,12 @@ bootstrap._showLoginScreen = function () {
  *
  * @param errors array Массив ошибок
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap.showErrors = function (errors) {
+lemurro.showErrors = function (errors) {
     if (errors.length === 1 && errors[0].status === '401 Unauthorized') {
-        bootstrap._showLoginScreen();
+        lemurro._showLoginScreen();
     } else {
         for (var i in errors) {
             var item  = errors[i];
@@ -374,14 +373,14 @@ bootstrap.showErrors = function (errors) {
 /**
  * Запускаем обновление приложения
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap.update = function () {
+lemurro.update = function () {
     var market = 'market' + device.platform;
 
-    if (modeCordova && bootstrap.settings.hasOwnProperty(market)) {
-        window.open(bootstrap.settings[market], '_system');
+    if (modeCordova && lemurro.settings.hasOwnProperty(market)) {
+        window.open(lemurro.settings[market], '_system');
         e.preventDefault();
     } else {
         app.dialog.alert('Здесь должна быть ссылка на магазин "' + device.platform + '"', 'Магазин');
@@ -392,8 +391,8 @@ bootstrap.update = function () {
 /**
  * Проверка сессии при запуске приложения
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 /**
@@ -401,36 +400,36 @@ bootstrap.update = function () {
  *
  * @type {object}
  */
-var auth = {};
+lemurro.auth = {};
 
 /**
  * ИД таймера
  *
  * @type {int|null}
  *
- * @private
+ * @public
  */
-auth._timerID = null;
+lemurro.auth._timerID = null;
 /**
  * Запуск таймера
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-auth._runTimer = function () {
-    if (auth._timerID !== null) {
-        clearInterval(auth._timerID);
+lemurro.auth._runTimer = function () {
+    if (lemurro.auth._timerID !== null) {
+        clearInterval(lemurro.auth._timerID);
     }
 
-    auth._timerID = setInterval(function () {
-        var formCode  = $$('#js-auth-' + bootstrap.settings.authType + '-check-form');
+    lemurro.auth._timerID = setInterval(function () {
+        var formCode  = $$('#js-auth-' + lemurro.settings.authType + '-check-form');
         var elemTimer = formCode.find('.js-timer__count');
         var count     = parseInt(elemTimer.text(), 10);
 
         if (count > 0) {
             elemTimer.text(--count);
         } else {
-            clearInterval(auth._timerID);
+            clearInterval(lemurro.auth._timerID);
             formCode.find('.js-timer').hide();
             formCode.find('.js-resend').show();
         }
@@ -439,30 +438,30 @@ auth._runTimer = function () {
 /**
  * Проверка сессии
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-auth.check = function () {
+lemurro.auth.check = function () {
     app.preloader.show();
     app.request.get(pathServerAPI + 'auth/check', {}, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
             localforage.clear();
-            bootstrap.sessionID = '';
+            lemurro.sessionID = '';
         } else {
             app.loginScreen.close('#js-login-screen');
-            app.router.navigate(bootstrap.settings.pageAfterAuth);
+            app.router.navigate(lemurro.settings.pageAfterAuth);
         }
     });
 };
 /**
  * Проверка введенного кода
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-auth.checkCode = function () {
+lemurro.auth.checkCode = function () {
     var deviceInfo = {
         uuid        : 'q1w2e3r4t5y6u7i8o9p0',
         platform    : 'TestOS',
@@ -483,21 +482,21 @@ auth.checkCode = function () {
 
     app.preloader.show();
     app.request.post(pathServerAPI + 'auth/code', {
-        'auth_id'    : $$('#js-auth-' + bootstrap.settings.authType + '-get-form').find('input[name="auth_id"]').val(),
-        'auth_code'  : $$('#js-auth-' + bootstrap.settings.authType + '-check-form').find('input[name="auth_code"]').val(),
+        'auth_id'    : $$('#js-auth-' + lemurro.settings.authType + '-get-form').find('input[name="auth_id"]').val(),
+        'auth_code'  : $$('#js-auth-' + lemurro.settings.authType + '-check-form').find('input[name="auth_code"]').val(),
         'device_info': deviceInfo
     }, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
-            bootstrap.showErrors(result.errors);
+            lemurro.showErrors(result.errors);
         } else {
             localforage.setItem('sessionID', result.data.session, function () {
                 Deferred.next(function () {
-                    bootstrap.sessionID = result.data.session;
+                    lemurro.sessionID = result.data.session;
                 }).next(function () {
                     app.loginScreen.close('#js-login-screen');
-                    app.router.navigate(bootstrap.settings.pageAfterAuth);
+                    app.router.navigate(lemurro.settings.pageAfterAuth);
                 });
             });
         }
@@ -506,28 +505,28 @@ auth.checkCode = function () {
 /**
  * Получение кода
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-auth.getCode = function () {
+lemurro.auth.getCode = function () {
     app.preloader.show();
     app.request.get(pathServerAPI + 'auth/code', {
-        'auth_id': $$('#js-auth-' + bootstrap.settings.authType + '-get-form').find('input[name="auth_id"]').val()
+        'auth_id': $$('#js-auth-' + lemurro.settings.authType + '-get-form').find('input[name="auth_id"]').val()
     }, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
-            bootstrap.showErrors(result.errors);
+            lemurro.showErrors(result.errors);
         } else {
-            var formCode = $$('#js-auth-' + bootstrap.settings.authType + '-check-form');
+            var formCode = $$('#js-auth-' + lemurro.settings.authType + '-check-form');
 
             formCode.find('.js-timer').show();
             formCode.find('.js-timer__count').text('60');
             formCode.find('.js-resend').hide();
 
-            auth._runTimer();
+            lemurro.auth._runTimer();
 
-            $$('#js-auth-' + bootstrap.settings.authType + '-get-form').hide();
+            $$('#js-auth-' + lemurro.settings.authType + '-get-form').hide();
             formCode.show();
         }
     });
@@ -535,8 +534,8 @@ auth.getCode = function () {
 /**
  * Хелперы
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 /**
@@ -544,7 +543,7 @@ auth.getCode = function () {
  *
  * @type {object}
  */
-var helper = {};
+lemurro.helper = {};
 /**
  * Покажем подтверждение
  *
@@ -557,10 +556,10 @@ var helper = {};
  * @param {function} callbackConfirm    Функция при нажатии confirmButton
  * @param {function} callbackCancel     Функция при нажатии cancelButton
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
     swal({
         title             : title,
         html              : content,
@@ -587,10 +586,10 @@ helper.showConfirm = function (title, content, confirmButtonText, cancelButtonTe
  * @param title   string Заголовок окна
  * @param content string HTML-Содержимое
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helper.showPopup = function (title, content) {
+lemurro.helper.showPopup = function (title, content) {
     var popup = $$('#js-popup');
 
     popup.find('.popup__title').html(title);
@@ -601,8 +600,8 @@ helper.showPopup = function (title, content) {
 /**
  * Проверка интернета
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 /**
@@ -610,22 +609,22 @@ helper.showPopup = function (title, content) {
  *
  * @type {object}
  */
-var internet = {};
+lemurro.internet = {};
 /**
  * Пропал интернет
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-internet.offline = function () {
+lemurro.internet.offline = function () {
     app.dialog.preloader('Пропал интернет,<br>надо вернуть.');
 };
 /**
  * Появился интернет
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-internet.showPopup = function () {
+lemurro.internet.online = function () {
     app.dialog.close();
 };

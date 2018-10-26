@@ -1,9 +1,9 @@
 /**
  * Появился интернет
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-internet.showPopup = function () {
+lemurro.internet.online = function () {
     app.dialog.close();
 };

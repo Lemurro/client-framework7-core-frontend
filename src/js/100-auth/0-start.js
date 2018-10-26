@@ -1,8 +1,8 @@
 /**
  * Проверка сессии при запуске приложения
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 /**
@@ -10,13 +10,13 @@
  *
  * @type {object}
  */
-var auth = {};
+lemurro.auth = {};
 
 /**
  * ИД таймера
  *
  * @type {int|null}
  *
- * @private
+ * @public
  */
-auth._timerID = null;
+lemurro.auth._timerID = null;

@@ -1,8 +1,8 @@
 /**
  * Загрузочный скрипт приложения
  *
- * @version 05.07.2018
- * @author Дмитрий Щербаков <atomcms@ya.ru>
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 
 var app;
@@ -11,11 +11,11 @@ var mainView;
 
 window.onload = function () {
     if (modeCordova) {
-        document.addEventListener('deviceready', bootstrap.init);
-        document.addEventListener('offline', internet.offline);
-        document.addEventListener('online', internet.online);
+        document.addEventListener('deviceready', lemurro.init);
+        document.addEventListener('offline', lemurro.internet.offline);
+        document.addEventListener('online', lemurro.internet.online);
     } else {
-        bootstrap.init();
+        lemurro.init();
     }
 };
 
@@ -24,25 +24,25 @@ window.onload = function () {
  *
  * @type {object}
  */
-var bootstrap = {};
+var lemurro = {};
 
 /**
  * ИД сессии
  *
  * @type {string}
  */
-bootstrap.sessionID = '';
+lemurro.sessionID = '';
 
 /**
  * Настройки приложения
  *
  * @type {object}
  */
-bootstrap.settings = {};
+lemurro.settings = {};
 
 /**
  * Настройки framework7
  *
  * @type {object}
  */
-bootstrap.f7settings = {};
+lemurro.f7settings = {};

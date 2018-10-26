@@ -4,10 +4,10 @@
  * @param title   string Заголовок окна
  * @param content string HTML-Содержимое
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-helper.showPopup = function (title, content) {
+lemurro.helper.showPopup = function (title, content) {
     var popup = $$('#js-popup');
 
     popup.find('.popup__title').html(title);

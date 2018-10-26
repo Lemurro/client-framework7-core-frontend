@@ -3,18 +3,18 @@
  *
  * @param {string} pageName Имя страницы
  *
- * @version 05.07.2018
+ * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-bootstrap._initPage = function (pageName) {
+lemurro._initPage = function (pageName) {
     app.preloader.show();
     app.request.get(pathServerAPI + 'user', {}, function (result) {
         app.preloader.hide();
 
         if (result.hasOwnProperty('errors')) {
-            bootstrap.showErrors(result.errors);
+            lemurro.showErrors(result.errors);
         } else {
-            bootstrap.settings.onLoad(result.data);
+            lemurro.settings.onLoad(result.data);
 
             var pageScript = window[pageName];
 
