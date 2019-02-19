@@ -14,7 +14,6 @@
     "gulp-uglify": "^1.5.4"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "~5.4.2",
     "dimns-is-empty-js": "~1.1.0",
     "framework7": "~4.0.0",
     "inputmask": "~4.0.2",
