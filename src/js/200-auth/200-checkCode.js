@@ -38,7 +38,7 @@ lemurro.auth.checkCode = function () {
                 lemurro.sessionID = result.data.session;
 
                 app.loginScreen.close('#js-login-screen');
-                app.router.navigate(lemurro.settings.pageAfterAuth);
+                app.views.main.router.navigate(lemurro.settings.pageAfterAuth);
             });
         }
     });

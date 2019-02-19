@@ -1,7 +1,7 @@
 /**
  * Проверка сессии
  *
- * @version 26.10.2018
+ * @version 19.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.auth.check = function () {
@@ -14,7 +14,7 @@ lemurro.auth.check = function () {
             lemurro.sessionID = '';
         } else {
             app.loginScreen.close('#js-login-screen');
-            app.router.navigate(lemurro.settings.pageAfterAuth);
+            app.views.main.router.navigate(lemurro.settings.pageAfterAuth);
         }
     });
 };
