@@ -1,7 +1,7 @@
 /**
  * Проверка введенного кода
  *
- * @version 26.10.2018
+ * @version 19.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.auth.checkCode = function () {
@@ -35,12 +35,10 @@ lemurro.auth.checkCode = function () {
             lemurro.showErrors(result.errors);
         } else {
             localforage.setItem('sessionID', result.data.session, function () {
-                Deferred.next(function () {
-                    lemurro.sessionID = result.data.session;
-                }).next(function () {
-                    app.loginScreen.close('#js-login-screen');
-                    app.router.navigate(lemurro.settings.pageAfterAuth);
-                });
+                lemurro.sessionID = result.data.session;
+
+                app.loginScreen.close('#js-login-screen');
+                app.router.navigate(lemurro.settings.pageAfterAuth);
             });
         }
     });

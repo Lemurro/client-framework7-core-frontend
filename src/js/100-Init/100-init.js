@@ -1,7 +1,7 @@
 /**
  * Инициализация
  *
- * @version 26.10.2018
+ * @version 19.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.init = function () {
@@ -13,6 +13,18 @@ lemurro.init = function () {
         window.overrideF7Settings = {};
     }
 
+    /**
+     * ИД сессии
+     *
+     * @type {string}
+     */
+    lemurro.sessionID = '';
+
+    /**
+     * Настройки приложения
+     *
+     * @type {object}
+     */
     lemurro.settings = Object.assign({
         versionAPI   : 1,
         authType     : 'email',
@@ -26,6 +38,11 @@ lemurro.init = function () {
         }
     }, window.overrideSettings);
 
+    /**
+     * Настройки framework7
+     *
+     * @type {object}
+     */
     lemurro.f7settings = Object.assign({
         id     : 'ru.bestion.lemurro',
         name   : 'Lemurro',
