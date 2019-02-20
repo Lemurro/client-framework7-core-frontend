@@ -44743,7 +44743,7 @@ lemurro.update = function () {
     return false;
 };
 /**
- * Хелперы
+ * Проверка интернета
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
@@ -44754,59 +44754,24 @@ lemurro.update = function () {
  *
  * @type {object}
  */
-lemurro.helper = {};
+lemurro.internet = {};
 /**
- * Покажем подтверждение
- *
- * @param {string}   title              Заголовок
- * @param {string}   content            HTML-Содержимое
- * @param {string}   confirmButtonText  Текст кнопки "OK"
- * @param {string}   cancelButtonText   Текст кнопки "Cancel"
- * @param {function} callbackOpen       Функция при открытии формы
- * @param {function} callbackPreConfirm Функция перед вызовом callbackConfirm
- * @param {function} callbackConfirm    Функция при нажатии confirmButton
- * @param {function} callbackCancel     Функция при нажатии cancelButton
+ * Пропал интернет
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
-    swal({
-        title             : title,
-        html              : content,
-        type              : '',
-        allowOutsideClick : false,
-        showCancelButton  : true,
-        confirmButtonColor: '#2196f3',
-        confirmButtonText : confirmButtonText,
-        cancelButtonText  : cancelButtonText,
-        onOpen            : callbackOpen,
-        preConfirm        : callbackPreConfirm
-    }).then(function () {
-        callbackConfirm();
-    }, function (dismiss) {
-        // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-        if (dismiss !== '' && callbackCancel !== null) {
-            callbackCancel();
-        }
-    });
+lemurro.internet.offline = function () {
+    app.dialog.preloader('Пропал интернет,<br>надо вернуть.');
 };
 /**
- * Покажем всплывающее окно
- *
- * @param title   string Заголовок окна
- * @param content string HTML-Содержимое
+ * Появился интернет
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-lemurro.helper.showPopup = function (title, content) {
-    var popup = $$('#js-popup');
-
-    popup.find('.popup__title').html(title);
-    popup.find('.popup__content').html(content);
-
-    app.popup.open(popup);
+lemurro.internet.online = function () {
+    app.dialog.close();
 };
 /**
  * Проверка сессии при запуске приложения
@@ -44954,7 +44919,7 @@ lemurro.auth.getCode = function () {
     });
 };
 /**
- * Проверка интернета
+ * Хелперы
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
@@ -44965,22 +44930,57 @@ lemurro.auth.getCode = function () {
  *
  * @type {object}
  */
-lemurro.internet = {};
+lemurro.helper = {};
 /**
- * Пропал интернет
+ * Покажем подтверждение
+ *
+ * @param {string}   title              Заголовок
+ * @param {string}   content            HTML-Содержимое
+ * @param {string}   confirmButtonText  Текст кнопки "OK"
+ * @param {string}   cancelButtonText   Текст кнопки "Cancel"
+ * @param {function} callbackOpen       Функция при открытии формы
+ * @param {function} callbackPreConfirm Функция перед вызовом callbackConfirm
+ * @param {function} callbackConfirm    Функция при нажатии confirmButton
+ * @param {function} callbackCancel     Функция при нажатии cancelButton
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-lemurro.internet.offline = function () {
-    app.dialog.preloader('Пропал интернет,<br>надо вернуть.');
+lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+    swal({
+        title             : title,
+        html              : content,
+        type              : '',
+        allowOutsideClick : false,
+        showCancelButton  : true,
+        confirmButtonColor: '#2196f3',
+        confirmButtonText : confirmButtonText,
+        cancelButtonText  : cancelButtonText,
+        onOpen            : callbackOpen,
+        preConfirm        : callbackPreConfirm
+    }).then(function () {
+        callbackConfirm();
+    }, function (dismiss) {
+        // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
+        if (dismiss !== '' && callbackCancel !== null) {
+            callbackCancel();
+        }
+    });
 };
 /**
- * Появился интернет
+ * Покажем всплывающее окно
+ *
+ * @param title   string Заголовок окна
+ * @param content string HTML-Содержимое
  *
  * @version 26.10.2018
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
-lemurro.internet.online = function () {
-    app.dialog.close();
+lemurro.helper.showPopup = function (title, content) {
+    var popup = $$('#js-popup');
+
+    popup.find('.popup__title').html(title);
+    popup.find('.popup__content').html(content);
+
+    app.popup.open(popup);
 };
