@@ -1,18 +1,10 @@
 /**
  * Инициализация
  *
- * @version 19.02.2019
+ * @version 20.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.init = function () {
-    if (window.overrideSettings === undefined) {
-        window.overrideSettings = {};
-    }
-
-    if (window.overrideF7Settings === undefined) {
-        window.overrideF7Settings = {};
-    }
-
     /**
      * ИД сессии
      *
@@ -36,7 +28,7 @@ lemurro.init = function () {
 
             $$('#js-user_info').html(template(data));
         }
-    }, window.overrideSettings);
+    }, config.overrideSettings);
 
     /**
      * Настройки framework7
@@ -70,7 +62,7 @@ lemurro.init = function () {
                 url : './pages/home.html'
             }
         ]
-    }, window.overrideF7Settings);
+    }, config.overrideF7Settings);
 
     lemurro._bindJSerrors();
 

@@ -1,7 +1,7 @@
 /**
  * Получение кода
  *
- * @version 26.10.2018
+ * @version 20.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.auth.getCode = function () {
@@ -14,6 +14,10 @@ lemurro.auth.getCode = function () {
         if (result.hasOwnProperty('errors')) {
             lemurro.showErrors(result.errors);
         } else {
+            if (result.data.hasOwnProperty('message')) {
+                console.log(result.data.message, 'AuthCode');
+            }
+
             var formCode = $$('#js-auth-' + lemurro.settings.authType + '-check-form');
 
             formCode.find('.js-timer').show();

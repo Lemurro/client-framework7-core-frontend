@@ -44395,18 +44395,10 @@ var lemurro = {};
 /**
  * Инициализация
  *
- * @version 19.02.2019
+ * @version 20.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.init = function () {
-    if (window.overrideSettings === undefined) {
-        window.overrideSettings = {};
-    }
-
-    if (window.overrideF7Settings === undefined) {
-        window.overrideF7Settings = {};
-    }
-
     /**
      * ИД сессии
      *
@@ -44430,7 +44422,7 @@ lemurro.init = function () {
 
             $$('#js-user_info').html(template(data));
         }
-    }, window.overrideSettings);
+    }, config.overrideSettings);
 
     /**
      * Настройки framework7
@@ -44464,7 +44456,7 @@ lemurro.init = function () {
                 url : './pages/home.html'
             }
         ]
-    }, window.overrideF7Settings);
+    }, config.overrideF7Settings);
 
     lemurro._bindJSerrors();
 
@@ -44645,7 +44637,7 @@ lemurro._initPage = function (pageName) {
 /**
  * Запуск приложения
  *
- * @version 26.10.2018
+ * @version 19.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro._run = function () {
@@ -44662,7 +44654,6 @@ lemurro._run = function () {
                 popup.find('.popup__title').html('&nbsp;');
                 popup.find('.popup__content').html(
                     '<div class="text-align-center">' +
-                    '<h1><i class="fas fa-thumbs-up font-100"></i></h1>' +
                     '<h1>Ура, вышла новая версия приложения!</h1>' +
                     '<h3>Чтобы продолжить, обновите приложение из магазина.</h3>' +
                     '<p><a href="javascript:lemurro.update();" class="button button-raised button-fill">Обновить</a></p>' +
@@ -44750,6 +44741,72 @@ lemurro.update = function () {
     }
 
     return false;
+};
+/**
+ * Хелперы
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+
+/**
+ * Объект элемента
+ *
+ * @type {object}
+ */
+lemurro.helper = {};
+/**
+ * Покажем подтверждение
+ *
+ * @param {string}   title              Заголовок
+ * @param {string}   content            HTML-Содержимое
+ * @param {string}   confirmButtonText  Текст кнопки "OK"
+ * @param {string}   cancelButtonText   Текст кнопки "Cancel"
+ * @param {function} callbackOpen       Функция при открытии формы
+ * @param {function} callbackPreConfirm Функция перед вызовом callbackConfirm
+ * @param {function} callbackConfirm    Функция при нажатии confirmButton
+ * @param {function} callbackCancel     Функция при нажатии cancelButton
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
+    swal({
+        title             : title,
+        html              : content,
+        type              : '',
+        allowOutsideClick : false,
+        showCancelButton  : true,
+        confirmButtonColor: '#2196f3',
+        confirmButtonText : confirmButtonText,
+        cancelButtonText  : cancelButtonText,
+        onOpen            : callbackOpen,
+        preConfirm        : callbackPreConfirm
+    }).then(function () {
+        callbackConfirm();
+    }, function (dismiss) {
+        // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
+        if (dismiss !== '' && callbackCancel !== null) {
+            callbackCancel();
+        }
+    });
+};
+/**
+ * Покажем всплывающее окно
+ *
+ * @param title   string Заголовок окна
+ * @param content string HTML-Содержимое
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+lemurro.helper.showPopup = function (title, content) {
+    var popup = $$('#js-popup');
+
+    popup.find('.popup__title').html(title);
+    popup.find('.popup__content').html(content);
+
+    app.popup.open(popup);
 };
 /**
  * Проверка сессии при запуске приложения
@@ -44866,7 +44923,7 @@ lemurro.auth.checkCode = function () {
 /**
  * Получение кода
  *
- * @version 26.10.2018
+ * @version 20.02.2019
  * @author  Дмитрий Щербаков <atomcms@ya.ru>
  */
 lemurro.auth.getCode = function () {
@@ -44879,6 +44936,10 @@ lemurro.auth.getCode = function () {
         if (result.hasOwnProperty('errors')) {
             lemurro.showErrors(result.errors);
         } else {
+            if (result.data.hasOwnProperty('message')) {
+                console.log(result.data.message, 'AuthCode');
+            }
+
             var formCode = $$('#js-auth-' + lemurro.settings.authType + '-check-form');
 
             formCode.find('.js-timer').show();
@@ -44891,72 +44952,6 @@ lemurro.auth.getCode = function () {
             formCode.show();
         }
     });
-};
-/**
- * Хелперы
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-
-/**
- * Объект элемента
- *
- * @type {object}
- */
-lemurro.helper = {};
-/**
- * Покажем подтверждение
- *
- * @param {string}   title              Заголовок
- * @param {string}   content            HTML-Содержимое
- * @param {string}   confirmButtonText  Текст кнопки "OK"
- * @param {string}   cancelButtonText   Текст кнопки "Cancel"
- * @param {function} callbackOpen       Функция при открытии формы
- * @param {function} callbackPreConfirm Функция перед вызовом callbackConfirm
- * @param {function} callbackConfirm    Функция при нажатии confirmButton
- * @param {function} callbackCancel     Функция при нажатии cancelButton
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-lemurro.helper.showConfirm = function (title, content, confirmButtonText, cancelButtonText, callbackOpen, callbackPreConfirm, callbackConfirm, callbackCancel) {
-    swal({
-        title             : title,
-        html              : content,
-        type              : '',
-        allowOutsideClick : false,
-        showCancelButton  : true,
-        confirmButtonColor: '#2196f3',
-        confirmButtonText : confirmButtonText,
-        cancelButtonText  : cancelButtonText,
-        onOpen            : callbackOpen,
-        preConfirm        : callbackPreConfirm
-    }).then(function () {
-        callbackConfirm();
-    }, function (dismiss) {
-        // dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-        if (dismiss !== '' && callbackCancel !== null) {
-            callbackCancel();
-        }
-    });
-};
-/**
- * Покажем всплывающее окно
- *
- * @param title   string Заголовок окна
- * @param content string HTML-Содержимое
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-lemurro.helper.showPopup = function (title, content) {
-    var popup = $$('#js-popup');
-
-    popup.find('.popup__title').html(title);
-    popup.find('.popup__content').html(content);
-
-    app.popup.open(popup);
 };
 /**
  * Проверка интернета
