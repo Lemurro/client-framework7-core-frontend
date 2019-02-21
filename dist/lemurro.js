@@ -44743,37 +44743,6 @@ lemurro.update = function () {
     return false;
 };
 /**
- * Проверка интернета
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-
-/**
- * Объект элемента
- *
- * @type {object}
- */
-lemurro.internet = {};
-/**
- * Пропал интернет
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-lemurro.internet.offline = function () {
-    app.dialog.preloader('Пропал интернет,<br>надо вернуть.');
-};
-/**
- * Появился интернет
- *
- * @version 26.10.2018
- * @author  Дмитрий Щербаков <atomcms@ya.ru>
- */
-lemurro.internet.online = function () {
-    app.dialog.close();
-};
-/**
  * Проверка сессии при запуске приложения
  *
  * @version 26.10.2018
@@ -44917,6 +44886,37 @@ lemurro.auth.getCode = function () {
             formCode.show();
         }
     });
+};
+/**
+ * Проверка интернета
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+
+/**
+ * Объект элемента
+ *
+ * @type {object}
+ */
+lemurro.internet = {};
+/**
+ * Пропал интернет
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+lemurro.internet.offline = function () {
+    app.dialog.preloader('Пропал интернет,<br>надо вернуть.');
+};
+/**
+ * Появился интернет
+ *
+ * @version 26.10.2018
+ * @author  Дмитрий Щербаков <atomcms@ya.ru>
+ */
+lemurro.internet.online = function () {
+    app.dialog.close();
 };
 /**
  * Хелперы
