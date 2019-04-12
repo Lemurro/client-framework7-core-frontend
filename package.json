@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "dimns-is-empty-js": "~1.1.0",
-    "framework7": "~4.0.6",
+    "framework7": "~4.2.2",
     "inputmask": "~4.0.2",
     "jsdeferred": "~0.4.0",
     "localforage": "~1.7.2",
